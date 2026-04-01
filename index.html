@@ -4,27 +4,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Relógio Digital</title>
-    <style>
-        body{
-            background-color: #111;
-            color: #00ffcc;
-            font-family: Arial;
-            text-align: center;
-            margin-top: 100px;
-        }
-        h2 {
-            font-size: 60px;
-        }
-    </style>
+<style>
+    body {
+        background-color: #111;
+        color: #00ffcc;
+        font-family: Arial;
+        text-align: center;
+        margin-top: 100px;
+    }
+
+    h2 {
+        font-size: 60px;
+    }
+
+    button {
+        padding: 10px;
+        font-size: 18px;
+        cursor: pointer;
+        margin-top: 20px;
+        border: none;
+        border-radius: 5px;
+    }
+
+    .ligado {
+        background-color: green;
+        color: white;
+    }
+
+    .desligado {
+        background-color: red;
+        color: white;
+    }
+</style>
 
 </head>
 
 <body>
     <h1>Relógio Digital</h1>
     <h2 id="relogio">00:00:00</h2>
+    <button onclick="toggleRelogio()" id="botao">Desligar</button>
 </body>
 
 <script>
+    let intervalo; 
+    let ligado = true; 
+
     function atualizarRelogio() {
         let agora = new Date();
 
@@ -41,9 +65,36 @@
         document.getElementById("relogio").innerText = horario;
     }
 
-    setInterval(atualizarRelogio, 1000);
-</script>
+    function iniciarRelogio() {
+        intervalo = setInterval(atualizarRelogio, 1000);
+    }
 
+    function pararRelogio() {
+        clearInterval(intervalo);
+    }
+
+    function toggleRelogio() {
+        let botao = document.getElementById("botao");
+
+        ligado = !ligado;
+
+        if (ligado) {
+            iniciarRelogio();
+            botao.innerText = "Desligar";
+            botao.className = "ligado";
+        } else {
+            pararRelogio();
+            botao.innerText = "Ligar";
+            botao.className = "desligado";
+        }
+    }
+
+    iniciarRelogio();
+
+    document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("botao").className = "ligado";
+    });
+</script>
 
 
 
